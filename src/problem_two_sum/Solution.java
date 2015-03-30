@@ -22,27 +22,21 @@ public class Solution {
     public int[] twoSum(int[] numbers, int target) {
         
     	// key - the number; value - number's array index
-    	Map<String, Integer> numberMap = new HashMap();
+    	Map<Integer, Integer> numberMap = new HashMap();
     	int idx= 0;
     	for(int i: numbers){
-    		String key = i + "," + idx;
-    		numberMap.put(key, idx++);
+    		numberMap.put(new Integer(i), idx++);
     	}
     	
     	int index1 = 0;
     	int len = numbers.length;
     	int index2 = 0;
-    	outerloop :
     	while(index1 <= len-1){
     		int diff = target - numbers[index1];
-    		Set<String> keys = numberMap.keySet();
-    		for(String key : keys){
-    			int num = Integer.valueOf(key.substring(0, key.indexOf(",")));
-    			int idx_ = Integer.valueOf(key.substring(key.indexOf(",")+1));
-    			if( idx_ > index1 && diff == num){
-    				index2 = idx_;
-    				break outerloop;
-    			}
+    		Integer idx_ = numberMap.get(new Integer(diff));
+    		if(idx_ != null && idx_.intValue() > index1){
+    			index2= idx_.intValue();
+    			break;
     		}
     		index1++;
     	}
@@ -53,6 +47,8 @@ public class Solution {
     public static void main(String[] args) {
     	Solution s = new Solution();
     	int[] is = s.twoSum(new int[]{2, 7, 11, 15}, 9);
+		System.out.println(is[0] + ", " + is[1]);
+    	is = s.twoSum(new int[]{3,2,4}, 6);
 		System.out.println(is[0] + ", " + is[1]);
 		
 	}
